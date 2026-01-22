@@ -1,0 +1,102 @@
+##Swagger API definition for adding an artwork to the registry
+post:
+  tags:
+    - registry
+  summary: Creates an artwork
+  description: >-
+    The POST operative allows a user to add an artwork to the registry.
+    This artwork will not be visible in the marketplace until toggled.
+  operationId: postRegistry
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          $ref: "./ArtCertAPI.yaml#/components/schemas/artworkPost"
+        encoding:
+          image:
+            contentType: image/png, image/jpeg
+          dng:
+            contentType: application/gzip, application/octet-stream
+  responses:
+    "201":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "./ArtCertAPI.yaml#/components/schemas/artworkPostResponse"
+        application/xml:
+          schema:
+            $ref: "./ArtCertAPI.yaml#/components/schemas/artworkPostResponse"
+    "400":
+      $ref: "./ArtCertAPI.yaml#/components/responses/400"
+    "401":
+      $ref: "./ArtCertAPI.yaml#/components/responses/401"
+    "403":
+      $ref: "./ArtCertAPI.yaml#/components/responses/403"
+    "404":
+      $ref: "./ArtCertAPI.yaml#/components/responses/404"
+    "405":
+      $ref: "./ArtCertAPI.yaml#/components/responses/405"
+    "406":
+      $ref: "./ArtCertAPI.yaml#/components/responses/406"
+    "500":
+      $ref: "./ArtCertAPI.yaml#/components/responses/500"
+    "501":
+      $ref: "./ArtCertAPI.yaml#/components/responses/501"
+    "503":
+      $ref: "./ArtCertAPI.yaml#/components/responses/503"
+    "429":
+      $ref: "./ArtCertAPI.yaml#/components/responses/429"
+    default:
+      $ref: "./ArtCertAPI.yaml#/components/responses/500"
+  security:
+    - bearerAuth: []
+  x-swagger-router-controller: registry
+
+## Swagger API definition for getting a list of artworks from the registry
+get:
+  tags:
+    - registry
+  summary: gets a list of artworks belonging to the user in the registry
+  description: >-
+    The GET operative allows a user to retrieve a list of artworks they have added to the registry.
+  operationId: listRegistry
+  parameters:
+    - $ref: "./ArtCertAPI.yaml#/components/parameters/offsetquery"
+    - $ref: "./ArtCertAPI.yaml#/components/parameters/limitquery"
+    # - $ref: "./ArtCertAPI.yaml#/components/parameters/userIDpath"
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "./ArtCertAPI.yaml#/components/schemas/artworkList"
+        application/xml:
+          schema:
+            $ref: "./ArtCertAPI.yaml#/components/schemas/artworkList"
+    "400":
+      $ref: "./ArtCertAPI.yaml#/components/responses/400"
+    "401":
+      $ref: "./ArtCertAPI.yaml#/components/responses/401"
+    "403":
+      $ref: "./ArtCertAPI.yaml#/components/responses/403"
+    "404":
+      $ref: "./ArtCertAPI.yaml#/components/responses/404"
+    "405":
+      $ref: "./ArtCertAPI.yaml#/components/responses/405"
+    "406":
+      $ref: "./ArtCertAPI.yaml#/components/responses/406"
+    "500":
+      $ref: "./ArtCertAPI.yaml#/components/responses/500"
+    "501":
+      $ref: "./ArtCertAPI.yaml#/components/responses/501"
+    "503":
+      $ref: "./ArtCertAPI.yaml#/components/responses/503"
+    "429":
+      $ref: "./ArtCertAPI.yaml#/components/responses/429"
+    default:
+      $ref: "./ArtCertAPI.yaml#/components/responses/Error"
+  security:
+    - bearerAuth: []
+  x-swagger-router-controller: registry

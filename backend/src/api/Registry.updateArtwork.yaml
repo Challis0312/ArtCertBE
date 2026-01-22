@@ -1,0 +1,53 @@
+## Swagger API definition for updating a specific artwork in the registry
+put:
+  tags:
+    - registry
+  summary: Updates a specific artowk in an individuals registry
+  description: >-
+    The PUT operative works to update any or all of an artwork's fields.
+  operationId: putArtwork
+  parameters:
+    - $ref: "./ArtCertAPI.yaml#/components/parameters/artworkIDpath"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "./ArtCertAPI.yaml#/components/schemas/artworkPost"
+      application/xml:
+        schema:
+          $ref: "./ArtCertAPI.yaml#/components/schemas/artworkPost"
+  responses:
+    "202":
+      description: Successfully updated artwork
+      content:
+        application/json:
+          schema:
+            $ref: "./ArtCertAPI.yaml#/components/schemas/artwork"
+        application/xml:
+          schema:
+            $ref: "./ArtCertAPI.yaml#/components/schemas/artwork"
+    "400":
+      $ref: "./ArtCertAPI.yaml#/components/responses/400"
+    "401":
+      $ref: "./ArtCertAPI.yaml#/components/responses/401"
+    "403":
+      $ref: "./ArtCertAPI.yaml#/components/responses/403"
+    "404":
+      $ref: "./ArtCertAPI.yaml#/components/responses/404"
+    "405":
+      $ref: "./ArtCertAPI.yaml#/components/responses/405"
+    "406":
+      $ref: "./ArtCertAPI.yaml#/components/responses/406"
+    "500":
+      $ref: "./ArtCertAPI.yaml#/components/responses/500"
+    "501":
+      $ref: "./ArtCertAPI.yaml#/components/responses/501"
+    "503":
+      $ref: "./ArtCertAPI.yaml#/components/responses/503"
+    "429":
+      $ref: "./ArtCertAPI.yaml#/components/responses/429"
+    default:
+      $ref: "./ArtCertAPI.yaml#/components/responses/Error"
+  security:
+    - bearerAuth: []
+  x-swagger-router-controller: registry

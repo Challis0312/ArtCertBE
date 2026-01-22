@@ -1,0 +1,912 @@
+openapi: 3.0.0
+info:
+  title: Swagger art-cert - OpenAPI 3.0
+  description: |-
+    Stylistically, our art-cert API iteration seeks to equip our primary collectors and 
+    artists with the tools necessary to initiate e commerce and the sharing of art. 
+
+    Swagger tools are enabled to enhance the API specification's readability. 
+    Read it here at [https://swagger.io](https://swagger.io).
+  version: 1.0.0
+servers:
+  - url: "http://localhost:6777"
+    description: Local server
+tags:
+  - name: registry
+    description: registry functionality
+
+paths:
+  /v1/registry:
+    $ref: "./Registry.addArtwork.yaml"
+
+  /v1/registry/artwork/{artworkID}:
+    put:
+      tags:
+        - registry
+      summary: Updates a specific artwork in an individual's registry
+      description: >
+        The PUT operation updates any or all of an artwork's fields.
+      operationId: putArtwork
+      parameters:
+        - $ref: "#/components/parameters/artworkIDpath"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/artworkPost"
+          application/xml:
+            schema:
+              $ref: "#/components/schemas/artworkPost"
+      responses:
+        "202":
+          description: Successfully updated artwork
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/artwork"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/artwork"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "500":
+          $ref: "#/components/responses/500"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/Error"
+      security:
+        - bearerAuth: []
+      x-swagger-router-controller: registry
+
+    get:
+      tags:
+        - registry
+      summary: gets data for a specific artwork belonging to the user in the registry
+      description: >-
+        The GET operative allows a user to retrieve data for a specific artwork that they have added to the registry.
+      operationId: getArtworkData
+      parameters:
+        - $ref: "./ArtCertAPI.yaml#/components/parameters/artworkIDpath"
+        - $ref: "./ArtCertAPI.yaml#/components/parameters/offsetquery"
+        - $ref: "./ArtCertAPI.yaml#/components/parameters/limitquery"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "./ArtCertAPI.yaml#/components/schemas/artwork"
+            application/xml:
+              schema:
+                $ref: "./ArtCertAPI.yaml#/components/schemas/artwork"
+        "400":
+          $ref: "./ArtCertAPI.yaml#/components/responses/400"
+        "401":
+          $ref: "./ArtCertAPI.yaml#/components/responses/401"
+        "403":
+          $ref: "./ArtCertAPI.yaml#/components/responses/403"
+        "404":
+          $ref: "./ArtCertAPI.yaml#/components/responses/404"
+        "405":
+          $ref: "./ArtCertAPI.yaml#/components/responses/405"
+        "406":
+          $ref: "./ArtCertAPI.yaml#/components/responses/406"
+        "500":
+          $ref: "./ArtCertAPI.yaml#/components/responses/500"
+        "501":
+          $ref: "./ArtCertAPI.yaml#/components/responses/501"
+        "503":
+          $ref: "./ArtCertAPI.yaml#/components/responses/503"
+        "429":
+          $ref: "./ArtCertAPI.yaml#/components/responses/429"
+        default:
+          $ref: "./ArtCertAPI.yaml#/components/responses/Error"
+      security:
+        - bearerAuth: []
+      x-swagger-router-controller: registry
+
+    delete:
+      tags:
+        - registry
+      summary: deletes a specific artowk in an individuals registry
+      description: >-
+        The PUT operative works to delete any or all of an artwork's fields.
+      operationId: deleteRegistry
+      parameters:
+        - $ref: "./ArtCertAPI.yaml#/components/parameters/artworkIDpath"
+      responses:
+        "202":
+          description: Successfully deleted artwork
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "artwork deleted"
+              example:
+                message: "artwork deleted"
+        "400":
+          $ref: "./ArtCertAPI.yaml#/components/responses/400"
+        "401":
+          $ref: "./ArtCertAPI.yaml#/components/responses/401"
+        "403":
+          $ref: "./ArtCertAPI.yaml#/components/responses/403"
+        "404":
+          $ref: "./ArtCertAPI.yaml#/components/responses/404"
+        "405":
+          $ref: "./ArtCertAPI.yaml#/components/responses/405"
+        "406":
+          $ref: "./ArtCertAPI.yaml#/components/responses/406"
+        "500":
+          $ref: "./ArtCertAPI.yaml#/components/responses/500"
+        "501":
+          $ref: "./ArtCertAPI.yaml#/components/responses/501"
+        "503":
+          $ref: "./ArtCertAPI.yaml#/components/responses/503"
+        "429":
+          $ref: "./ArtCertAPI.yaml#/components/responses/429"
+        default:
+          $ref: "./ArtCertAPI.yaml#/components/responses/Error"
+      security:
+        - bearerAuth: []
+      x-swagger-router-controller: registry
+
+  # /v1/registry/{userID}:
+  #   $ref: "./Registry.userArtwork.yaml"
+
+  /v1/registry/artwork:
+    $ref: "./Registry.getArtworkTest.yaml"
+
+  /v1/marketplace:
+    $ref: "./Marketplace.index.yaml"
+
+  /v1/marketplace/{artworkID}:
+    $ref: "./Marketplace.artwork.yaml"
+
+  # view artwork from marketplace
+  /v1/marketplace/artwork/{artworkID}:
+    $ref: "./Marketplace.artwork.yaml"
+
+  /v1/marketplace/artist/{artistID}:
+    $ref: "./Marketplace.artist.yaml"
+
+  /v1/verification/{artworkID}:
+    $ref: "./Verification.yaml"
+
+  /v1/toggle/{artworkID}:
+    $ref: "./Registry.toggle.yaml"
+
+  /v1/compression:
+    $ref: "./Compression.yaml"
+
+  /v1/userRole:
+    $ref: "./UserRole.yaml"
+
+  /v1/userAction/{artworkID}:
+    $ref: "./UserAction.yaml"
+
+  /v1/profile/{artistID}:
+    $ref: "./Profile.yaml"
+
+  /v1/logout:
+    get:
+      summary: Logout user and redirect to Cognito logout
+      operationId: logoutUser
+      responses:
+        "302":
+          description: Redirect to Cognito logout
+
+  /v1/login:
+    get:
+      summary: Redirects user to Cognito login
+      operationId: loginUser
+      responses:
+        "302":
+          description: Redirect to Cognito login page
+
+  /v1/verify/{artworkID}:
+    # Verifies a specific artwork based on ID.
+    put:
+      tags:
+        - artwork
+        - artworkID
+      summary: Updates a specific artwork entity
+      description: >-
+        The PUT operative works to update the artwork field to verify.
+      operationId: verifyArtwork
+      parameters:
+        - $ref: "#/components/parameters/artworkIDpath"
+      requestBody:
+        $ref: "#/components/requestBodies/artworkPost"
+      responses:
+        "202":
+          description: Successfully updated artwork
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/artwork"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/artwork"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "500":
+          $ref: "#/components/responses/500"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/Error"
+      security:
+        - bearerAuth: []
+
+  /v1/offer/artwork/{artworkID}:
+    $ref: "./Offer.makeOffer.yaml"
+
+  /v1/offer/{offerID}/accept:
+    # Updates a specific artwork offer based on ID
+    put:
+      tags:
+        - offer
+      summary: Updates a specific offer entity to accept or reject
+      description: >-
+        The PUT operative works to confirm an offer or rejcect
+      operationId: acceptOffer
+      parameters:
+        - $ref: "#/components/parameters/offerIDpath"
+      responses:
+        "202":
+          description: Successfully updated offer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offer"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/offer"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "500":
+          $ref: "#/components/responses/500"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/Error"
+      security:
+        - bearerAuth: []
+      x-swagger-router-controller: offer
+
+  /v1/offer/{offerID}/reject:
+    # Updates a specific artwork offer based on ID
+    put:
+      tags:
+        - offer
+      summary: Updates a specific offer entity to accept or reject
+      description: >-
+        The PUT operative works to confirm an offer or rejcect
+      operationId: rejectOffer
+      parameters:
+        - $ref: "#/components/parameters/offerIDpath"
+      responses:
+        "202":
+          description: Successfully updated offer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offer"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/offer"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "500":
+          $ref: "#/components/responses/500"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/Error"
+      security:
+        - bearerAuth: []
+      x-swagger-router-controller: offer
+
+  /v1/offer/{offerID}/cancel:
+    # Updates a specific artwork offer based on ID
+    put:
+      tags:
+        - offer
+      summary: Updates a specific offer entity to accept or reject
+      description: >-
+        The PUT operative works to confirm an offer or rejcect
+      operationId: cancelOffer
+      parameters:
+        - $ref: "#/components/parameters/offerIDpath"
+      responses:
+        "202":
+          description: Successfully updated offer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offer"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/offer"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "500":
+          $ref: "#/components/responses/500"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/Error"
+      security:
+        - bearerAuth: []
+      x-swagger-router-controller: offer
+
+  /v1/offer/{offerID}:
+    get:
+      tags:
+        - offer
+      summary: gets data for a specific offer belonging to the user in the registry
+      description: >-
+        The GET operative allows a user to retrieve data for a specific offer that they have made on an artwork.
+      operationId: getOffer
+      parameters:
+        - $ref: "#/components/parameters/offerIDpath"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/offer"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/offer"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "405":
+          $ref: "#/components/responses/405"
+        "406":
+          $ref: "#/components/responses/406"
+        "500":
+          $ref: "#/components/responses/500"
+        "501":
+          $ref: "#/components/responses/501"
+        "503":
+          $ref: "#/components/responses/503"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/Error"
+      security:
+        - bearerAuth: []
+      x-swagger-router-controller: offer
+
+  /v1/offer/received/{artworkID}:
+    # Gets all offers for a specific artwork
+    $ref: "./Offer.seeArtworkOffers.yaml"
+
+  /v1/offer/received:
+    $ref: "./Offer.seeReceivedOffers.yaml"
+  /v1/offer/sent:
+    $ref: "./Offer.seeSentOffers.yaml"
+
+components:
+  schemas:
+    artwork:
+      type: object
+      additionalProperties: false
+      properties:
+        artworkID:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        artistID:
+          type: string
+          format: uuid
+          example: "f6a1b5a2-1f2e-4a8c-9c11-12d34e56f789"
+        artworkName:
+          type: string
+          example: "Water Lily"
+        dimension:
+          type: string
+          example: "30x40 cm"
+        artMedium:
+          type: string
+          example: "Oil on canvas"
+        dateOfProduction:
+          type: string
+          format: date-time
+          example: "2025-09-14T10:31:00+10:00"
+        verified:
+          type: boolean
+          example: true
+        toggle:
+          type: boolean
+          example: true
+        publicRecord:
+          type: boolean
+          example: true
+      example:
+        - artworkID: "550e8400-e29b-41d4-a716-446655440000"
+        - artistID: "f6a1b5a2-1f2e-4a8c-9c11-12d34e56f789"
+        - artworkName: "Water Lily"
+        - dimension: "30x40 cm"
+        - artMedium: "Oil on canvas"
+        - dateOfProduction: "2022-06-01"
+        - verified: true
+        - toggle: true
+        - publicRecord: true
+      xml:
+        name: artworksGetResponse
+    artworkList:
+      type: array
+      items:
+        $ref: "#/components/schemas/artwork"
+      example:
+        - artworkID: "550e8400-e29b-41d4-a716-446655440000"
+        - artistID: "f6a1b5a2-1f2e-4a8c-9c11-12d34e56f789"
+        - artworkName: "Water Lily"
+        - dimension: "30x40 cm"
+        - artMedium: "Oil on canvas"
+        - dateOfProduction: "2022-06-01"
+        - verified: true
+        - toggle: true
+        - publicRecord: true
+      xml:
+        name: artworkListResponse
+    # artworkPost:
+    #   type: object
+    #   additionalProperties: false
+    #   required:
+    #     - artistID
+    #   properties:
+    #     artistID:
+    #       type: string
+    #       format: uuid
+    #       example: "f6a1b5a2-1f2e-4a8c-9c11-12d34e56f789"
+    #     ownerID:
+    #       type: string
+    #       format: uuid
+    #       example: "f6a1b5a2-1f2e-4a8c-9c11-12d34e56f789"
+    #     artworkName:
+    #       type: string
+    #       example: "Water Lily"
+    #     dimension:
+    #       type: string
+    #       example: "30x40 cm"
+    #     artMedium:
+    #       type: string
+    #       example: "Oil on canvas"
+    #     dateOfProduction:
+    #       type: string
+    #       format: date-time
+    #       example: "2025-09-14T10:31:00+10:00"
+    #   example:
+    #     artistID: "f6a1b5a2-1f2e-4a8c-9c11-12d34e56f789"
+    #     artworkName: "Water Lily"
+    #     dimension: "30x40 cm"
+    #     artMedium: "Oil on canvas"
+    #     dateOfProduction: "2022-06-01"
+    #   xml:
+    #     name: artworkPostResponse
+    artworkPost:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+      properties:
+        # Text Field
+        isArtist:
+          type: boolean
+          description: Whether the submitter is the artist
+        authorFirstName:
+          type: string
+        authorLastName:
+          type: string
+        title:
+          type: string
+        artMedium:
+          type: string
+        dimensions:
+          type: string
+          example: "30x40"
+        dateOfProduction:
+          type: string
+          format: date-time
+        description:
+          type: string
+        tags:
+          type: string
+        # File Field
+        image:
+          type: string
+          format: binary
+          description: Image file (png/jpg/jpeg).
+        dng:
+          type: string
+          format: binary
+          description: Compressed DNG file with .dng.gz extension.
+      xml:
+        name: artworkPostResponse
+    artworkPostResponse:
+      type: object
+      properties:
+        ArtworkID:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        DngReference:
+          type: string
+          format: uuid
+          example: "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"
+        ImageReference:
+          type: string
+          format: uuid
+          example: "b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e"
+        DngUrl:
+          type: string
+          format: uri
+          example: "https://your-bucket.s3.us-east-1.amazonaws.com/dng/a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d.dng.gz"
+        ImageUrl:
+          type: string
+          format: uri
+          example: "https://your-bucket.s3.us-east-1.amazonaws.com/images/b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e.jpg"
+    offer:
+      type: object
+      items:
+        type: object
+        additionalProperties: false
+        required:
+          - artworkID
+          - amount
+        properties:
+          artworkID:
+            type: string
+            example: "c1a2b3c4-d5e6-7890-abcd-1234567890ef"
+          amount:
+            type: number
+            example: "120"
+      example:
+        - artworkID: "c1a2b3c4-d5e6-7890-abcd-1234567890ef"
+        - amount: "120"
+      xml:
+        name: registryGetResponse
+    offerList:
+      type: array
+      additionalProperties: true
+      items:
+        $ref: "#/components/schemas/offer"
+      example:
+        - artworkID: "c1a2b3c4-d5e6-7890-abcd-1234567890ef"
+        - amount: "120"
+      xml:
+        name: artworkListResponse
+    verifyArtwork:
+      type: object
+      additionalProperties: false
+      required:
+        - verify
+      properties:
+        verify:
+          type: boolean
+          description: Flag indicating if the artwork is verified
+          example: true
+    Error:
+      discriminator:
+        propertyName: "@type"
+        mapping:
+          Error: "#/components/schemas/Error"
+      allOf:
+        - type: object
+          required:
+            - code
+            - reason
+          properties:
+            code:
+              type: string
+              description: "Application relevant detail, defined in the API or a common list."
+              maxLength: 32
+              pattern: ^[a-zA-Z0-9 -/']*$
+            reason:
+              type: string
+              description: Explanation of the reason for the error which can be shown to a client user.
+              maxLength: 32
+              pattern: ^[a-zA-Z0-9 -/']*$
+            message:
+              type: string
+              description: >-
+                More details and corrective actions related to the error which can be shown to a
+                client user.
+              maxLength: 32
+              pattern: ^[a-zA-Z0-9 -/']*$
+            status:
+              type: string
+              description: HTTP Error code extension
+              maxLength: 32
+              pattern: ^[a-zA-Z0-9 -/']*$
+            referenceError:
+              type: string
+              description: URI of documentation describing the error.
+              maxLength: 32
+              pattern: ^[a-zA-Z0-9 -/']*$
+      description: "Used when an API throws an Error, typically with a HTTP error response-code (3xx, 4xx, 5xx)"
+  requestBodies:
+    # artworkPost:
+    #   description: artwork object that needs to be added
+    #   content:
+    #     application/json:
+    #       schema:
+    #         $ref: "#/components/schemas/artworkPost"
+    #     application/xml:
+    #       schema:
+    #         $ref: "#/components/schemas/artworkPost"
+    artworkPost:
+      description: artwork object that needs to be added
+      content:
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/artworkPost"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/artworkPost"
+    offerPost:
+      description: offer object that needs to be added
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/offer"
+        application/xml:
+          schema:
+            $ref: "#/components/schemas/offer"
+    rawImagePost:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+    displayImagePost:
+      required: true
+      description: image file that needs to be compressed
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              file:
+                type: string
+                format: binary
+                description: Image file to compress and store
+              rawDisplayPhoto:
+                type: string
+                format: binary
+                description: DNG file to store
+            required:
+              - rawDisplayPhoto
+  parameters:
+    userquery:
+      name: userID
+      in: query
+      required: false
+      description: The userID of the user of focus
+      schema:
+        type: integer
+    offsetquery:
+      name: offset
+      in: query
+      required: false
+      description: The Initial index of requested resource
+      schema:
+        type: integer
+    limitquery:
+      name: limit
+      in: query
+      required: false
+      description: The number of resources to be returned in request
+      schema:
+        type: integer
+
+    artworkIDpath:
+      name: artworkID
+      required: true
+      in: path
+      schema:
+        type: string
+        format: uuid
+        example: "550e8400-e29b-41d4-a716-446655440000"
+      description: Identifier of the Resource
+
+    userIDpath:
+      name: userID
+      required: true
+      in: path
+      schema:
+        type: string
+        format: uuid
+        example: "550e8400-e29b-41d4-a716-446655440000"
+
+    artistIDpath:
+      name: artistID
+      required: true
+      in: path
+      schema:
+        type: string
+        format: uuid
+        example: "550e8400-e29b-41d4-a716-446655440000"
+    registryIDpath:
+      name: registryID
+      required: true
+      in: query
+      schema:
+        type: integer
+        example: 123
+      description: Identifier of the Resource
+    offerIDpath:
+      name: offerID
+      required: true
+      in: path
+      schema:
+        type: string
+        format: uuid
+        example: "550e8400-e29b-41d4-a716-446655440000"
+      description: Identifier of the Resource
+
+  responses:
+    "204":
+      description: Deleted
+    "400":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    "403":
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    "404":
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    "405":
+      description: Method Not allowed
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    "406":
+      description: missmatched response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    "429":
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    "500":
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    "501":
+      description: Not Implemented
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    "503":
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+    Error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

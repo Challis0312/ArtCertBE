@@ -1,0 +1,6 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /opt/myapp
+# No hooks section - just copy files

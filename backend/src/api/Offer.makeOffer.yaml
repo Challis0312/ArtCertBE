@@ -1,0 +1,47 @@
+##Swagger API definition for creating an offer for a work
+post:
+  tags:
+    - offer
+  summary: creates an offer for a work
+  description: >-
+    The post creates an offer for an artpiece
+  operationId: postOffer
+  parameters:
+    - $ref: "./ArtCertAPI.yaml#/components/parameters/artworkIDpath"
+  requestBody:
+    $ref: "./ArtCertAPI.yaml#/components/requestBodies/offerPost"
+  responses:
+    "202":
+      description: Successfully created offer
+      content:
+        application/json:
+          schema:
+            $ref: "./ArtCertAPI.yaml#/components/schemas/offer"
+        application/xml:
+          schema:
+            $ref: "./ArtCertAPI.yaml#/components/schemas/offer"
+    "400":
+      $ref: "./ArtCertAPI.yaml#/components/responses/400"
+    "401":
+      $ref: "./ArtCertAPI.yaml#/components/responses/401"
+    "403":
+      $ref: "./ArtCertAPI.yaml#/components/responses/403"
+    "404":
+      $ref: "./ArtCertAPI.yaml#/components/responses/404"
+    "405":
+      $ref: "./ArtCertAPI.yaml#/components/responses/405"
+    "406":
+      $ref: "./ArtCertAPI.yaml#/components/responses/406"
+    "500":
+      $ref: "./ArtCertAPI.yaml#/components/responses/500"
+    "501":
+      $ref: "./ArtCertAPI.yaml#/components/responses/501"
+    "503":
+      $ref: "./ArtCertAPI.yaml#/components/responses/503"
+    "429":
+      $ref: "./ArtCertAPI.yaml#/components/responses/429"
+    default:
+      $ref: "./ArtCertAPI.yaml#/components/responses/Error"
+  security:
+    - bearerAuth: []
+  x-swagger-router-controller: offer

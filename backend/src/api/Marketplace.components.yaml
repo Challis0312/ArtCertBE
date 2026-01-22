@@ -1,0 +1,144 @@
+components:
+  schemas:
+    artist:
+      type: object
+      additionalProperties: false
+      required:
+        - artworkID
+        - artist
+      properties:
+        sub:
+          type: string
+          format: uuid
+          example: "XXXX-XXXX-XXXX-XXXX-XXXX"
+        username:
+          type: string
+        # descriptionOfArtist:
+      example:
+        sub: "XXXX-XXXX-XXXX-XXXX-XXXX"
+        username: "Jane Doe"
+
+    artwork:
+      type: object
+      additionalProperties: false
+      required:
+        - artworkID
+        - artworkName
+        - dimension
+        - artMedia
+        - dateOfProduction
+        - verified
+        - toggle
+        - public_record
+      properties:
+        artworkID:
+          type: string
+          format: uuid
+        artworkName:
+          type: string
+        dimension:
+          type: number
+          format: double
+          description: e.g. "30.0"
+        artMedium:
+          type: string
+          description: e.g. "Oil on canvas"
+        dateOfProduction:
+          type: string
+          format: date-time
+          description: e.g. "2025-09-14T10:31:00+10:00"
+        verified:
+          type: boolean
+        toggle:
+          type: boolean
+          description: Visible toggle
+        publicRecord:
+          type: boolean
+        deleted:
+          type: boolean
+        price:
+          type: number
+          format: double
+          description: e.g. "2000.0"
+        # descriptionOfArtwork:
+        example:
+          artworkID: "XXXX-XXXX-XXXX-XXXX-XXXX"
+          artistID: "XXXX-XXXX-XXXX-XXXX-XXXX"
+          artworkName: "Water Lily"
+          dimension: 30.0
+          artMedium: "Oil on canvas"
+          dateOfProduction: "2022-06-01"
+          verified: true
+          toggle: true
+          publicRecord: true
+          deleted: false
+          price: 2000.0
+
+    marketplaceSingle:
+      type: object
+      additionalProperties: false
+      required:
+        - artist
+        - artwork
+      properties:
+        artist:
+          $ref: "#/components/schemas/artist"
+        artwork:
+          $ref: "#/components/schemas/artwork"
+      xml:
+        name: artworkProfileInMarketGetResponse
+
+    marketplaceAll:
+      type: array
+      items:
+        $ref: "#/components/schemas/marketplaceSingle"
+      xml:
+        name: artworksAllInMarketGetResponse
+
+    profile:
+      type: object
+      additionalProperties: false
+      required:
+        - artist_id
+        - image
+        - description
+        - count
+        - artist_name
+      properties:
+        artist_id:
+          type: string
+          format: uuid
+          example: "XXXX-XXXX-XXXX-XXXX-XXXX"
+        image:
+          type: string
+          example: "/image/123.jpeg"
+        description:
+          type: string
+        count:
+          type: integer
+        artist_name:
+          type: string
+        # descriptionOfArtist:
+
+  requestBodies:
+    artworkPut:
+      description: artwork price that needs to be updated
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            required: [price]
+            properties:
+              price:
+                type: number
+                format: double
+                example: 2000.0
+        application/xml:
+          schema:
+          type: object
+          properties:
+            price:
+              type: number
+              format: double
+              example: 2000.0

@@ -1,0 +1,45 @@
+# List all artworks from the specific artist(artist profile navigated by this sequence: marketplace -> view artwork -> view artist)
+get:
+  tags:
+    - marketplace
+  summary: List all artworks from the specific artist
+  description: >-
+    The GET operative works to get a specific artist profile
+  operationId: getArtistProfileInMarket
+  parameters:
+    - $ref: './ArtCertAPI.yaml#/components/parameters/artistIDpath'
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "./Marketplace.components.yaml#/components/schemas/marketplaceAll"
+        application/xml:
+          schema:
+            $ref: "./Marketplace.components.yaml#/components/schemas/marketplaceAll"
+    '400':
+      $ref: './ArtCertAPI.yaml#/components/responses/400'
+    '401':
+      $ref: './ArtCertAPI.yaml#/components/responses/401'
+    '403':
+      $ref: './ArtCertAPI.yaml#/components/responses/403'
+    '404':
+      $ref: './ArtCertAPI.yaml#/components/responses/404'
+    '405':
+      $ref: './ArtCertAPI.yaml#/components/responses/405'
+    '406':
+      $ref: './ArtCertAPI.yaml#/components/responses/406'
+    '500':
+      $ref: './ArtCertAPI.yaml#/components/responses/500'
+    '501':
+      $ref: './ArtCertAPI.yaml#/components/responses/501'
+    '503':
+      $ref: './ArtCertAPI.yaml#/components/responses/503'
+    '429':
+      $ref: './ArtCertAPI.yaml#/components/responses/429'
+    default:
+      $ref: './ArtCertAPI.yaml#/components/responses/Error'
+  security:
+    - bearerAuth: []
+  x-swagger-router-controller: Marketplace

@@ -1,0 +1,59 @@
+post:
+  tags:
+    - verify
+  summary: Verify artwork
+  description: >-
+    Verifies artwork by changing the verify field to true.
+    .DNG file (compressed .dng.gz) is uploaded within the request body, analysed, and given a response back as accepted, 
+    then that will make it 'verified' and the verification date should update; otherwise it should remain the same 'verify' value
+    with the same date of verification.
+  operationId: verifyArtwork
+  parameters:
+    - $ref: "./ArtCertAPI.yaml#/components/parameters/artworkIDpath"
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            rawFile:
+              type: string
+              format: binary
+              description: Compressed .dng.gz file to verify
+          required:
+            - rawFile
+        encoding:
+          rawFile:
+            contentType: application/gzip, application/octet-stream
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "./ArtCertAPI.yaml#/components/schemas/verifyArtwork"
+    "400":
+      $ref: "./ArtCertAPI.yaml#/components/responses/400"
+    "401":
+      $ref: "./ArtCertAPI.yaml#/components/responses/401"
+    "403":
+      $ref: "./ArtCertAPI.yaml#/components/responses/403"
+    "404":
+      $ref: "./ArtCertAPI.yaml#/components/responses/404"
+    "405":
+      $ref: "./ArtCertAPI.yaml#/components/responses/405"
+    "406":
+      $ref: "./ArtCertAPI.yaml#/components/responses/406"
+    "500":
+      $ref: "./ArtCertAPI.yaml#/components/responses/500"
+    "501":
+      $ref: "./ArtCertAPI.yaml#/components/responses/501"
+    "503":
+      $ref: "./ArtCertAPI.yaml#/components/responses/503"
+    "429":
+      $ref: "./ArtCertAPI.yaml#/components/responses/429"
+    default:
+      $ref: "./ArtCertAPI.yaml#/components/responses/Error"
+  security:
+    - bearerAuth: []
+  x-swagger-router-controller: verification

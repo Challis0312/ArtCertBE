@@ -1,0 +1,48 @@
+# Returns a list of artworks to marketplace
+get:
+  tags:
+    - marketplace
+  summary: List or find artwork objects in marketplace
+  description: >-
+    Objectively, the get operative seeks to highlight all artworks 
+    in the marketplace; allowing all users to look at the captured data
+  operationId: listArtworksInMarket
+  parameters:
+    - $ref: './ArtCertAPI.yaml#/components/parameters/userquery'
+    - $ref: './ArtCertAPI.yaml#/components/parameters/offsetquery'
+    - $ref: './ArtCertAPI.yaml#/components/parameters/limitquery'  
+  responses:
+    '200':
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: './Marketplace.components.yaml#/components/schemas/marketplaceAll'
+        application/xml:
+          schema:
+            $ref: './Marketplace.components.yaml#/components/schemas/marketplaceAll'
+    '400':
+      $ref: './ArtCertAPI.yaml#/components/responses/400'
+    '401':
+      $ref: './ArtCertAPI.yaml#/components/responses/401'
+    '403':
+      $ref: './ArtCertAPI.yaml#/components/responses/403'
+    '404':
+      $ref: './ArtCertAPI.yaml#/components/responses/404'
+    '405':
+      $ref: './ArtCertAPI.yaml#/components/responses/405'
+    '406':
+      $ref: './ArtCertAPI.yaml#/components/responses/406'
+    '500':
+      $ref: './ArtCertAPI.yaml#/components/responses/500'
+    '501':
+      $ref: './ArtCertAPI.yaml#/components/responses/501'
+    '503':
+      $ref: './ArtCertAPI.yaml#/components/responses/503'
+    '429':
+      $ref: './ArtCertAPI.yaml#/components/responses/429'
+    default:
+      $ref: './ArtCertAPI.yaml#/components/responses/Error'
+  security:
+    - bearerAuth: []
+  x-swagger-router-controller: Marketplace

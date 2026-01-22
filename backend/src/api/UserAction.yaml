@@ -1,0 +1,66 @@
+# Returns allowable actions for current user on an artwork
+get:
+  tags:
+    - action
+  summary: Get allowable actions for current user on an artwork
+  description: >-
+      Returns capability flags for the authenticated user (identified by JWT sub)
+      on the specified artwork.
+  operationId: getUserAction
+  parameters:
+    - $ref: './ArtCertAPI.yaml#/components/parameters/artworkIDpath'
+  responses:
+    '200':
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: false
+            required: [canAuthenticate, canVerify]
+            properties:
+              canAuthenticate:
+                type: boolean
+              canVerify:
+                type: boolean
+            example: 
+              canAuthenticate: false
+              canVerify: true
+        application/xml:
+          schema:
+            type: object
+            additionalProperties: false
+            required: [canAuthenticate, canVerify]
+            properties:
+              canAuthenticate:
+                type: boolean
+              canVerify:
+                type: boolean
+            example: 
+              canAuthenticate: false
+              canVerify: true
+    '400':
+      $ref: './ArtCertAPI.yaml#/components/responses/400'
+    '401':
+      $ref: './ArtCertAPI.yaml#/components/responses/401'
+    '403':
+      $ref: './ArtCertAPI.yaml#/components/responses/403'
+    '404':
+      $ref: './ArtCertAPI.yaml#/components/responses/404'
+    '405':
+      $ref: './ArtCertAPI.yaml#/components/responses/405'
+    '406':
+      $ref: './ArtCertAPI.yaml#/components/responses/406'
+    '500':
+      $ref: './ArtCertAPI.yaml#/components/responses/500'
+    '501':
+      $ref: './ArtCertAPI.yaml#/components/responses/501'
+    '503':
+      $ref: './ArtCertAPI.yaml#/components/responses/503'
+    '429':
+      $ref: './ArtCertAPI.yaml#/components/responses/429'
+    default:
+      $ref: './ArtCertAPI.yaml#/components/responses/Error'
+  security:
+    - bearerAuth: []
+  x-swagger-router-controller: User
