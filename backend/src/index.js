@@ -421,7 +421,7 @@ async function startServer() {
 
   server.requestTimeout = 10 * 60 * 1000;  // 10 minutes
   server.headersTimeout = 11 * 60 * 1000;  // must be greater than requestTimeout
-  server.keepAliveTimeout = 60 * 1000;     // 1 minute
+  server.keepAliveTimeout = 10 * 1000;     // 10 minutes
   server.timeout = 0;                     // disabling legacy timeout
 
   server.listen(endpoint, "0.0.0.0", () => {
