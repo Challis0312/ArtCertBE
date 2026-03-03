@@ -83,7 +83,7 @@ async function getDBPool() {
       // PostgreSQL-specific pool options
       max: POSTGRES_connectionLimit || 20,  // Maximum number of clients in pool
       idleTimeoutMillis: POSTGRES_idleTimeout || 30000,  // How long a client is allowed to remain idle
-      connectionTimeoutMillis: 2000,  // How long to wait when connecting a new client
+      connectionTimeoutMillis: 30000,  // How long to wait when connecting a new client
       maxUses: 7500, // Maximum number of times to use a connection before closing
       allowExitOnIdle: false // Allow the pool to close connections and exit when all clients are idle
     };
