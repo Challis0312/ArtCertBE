@@ -417,11 +417,23 @@ async function startServer() {
     process.exit(1);
   }
 
-  http.createServer(app).listen(endpoint, "0.0.0.0", () => {
+  const server = http.createServer(app);
+
+  server.requestTimeout = 10 * 60 * 1000;  // 10 minutes
+  server.headersTimeout = 11 * 60 * 1000;  // must be greater than requestTimeout
+  server.keepAliveTimeout = 60 * 1000;     // 1 minute
+  server.timeout = 0;                     // disabling legacy timeout
+
+  server.listen(endpoint, "0.0.0.0", () => {
     console.log('Your server is listening on port %d (http://0.0.0.0:%d)', endpoint, endpoint);
     console.log(`Environment env is "${target_env}"`);
-    // console.log(`DB schema is ${POSTGRES_DB}`);
   });
+
+  // http.createServer(app).listen(endpoint, "0.0.0.0", () => {
+  //   console.log('Your server is listening on port %d (http://0.0.0.0:%d)', endpoint, endpoint);
+  //   console.log(`Environment env is "${target_env}"`);
+  //   // console.log(`DB schema is ${POSTGRES_DB}`);
+  // });
 
 }
 
