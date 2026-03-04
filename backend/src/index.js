@@ -89,14 +89,14 @@ const corsOptions = {
   credentials: true, // if need to send cookies or auth headers
 };
 
-app.use(cors(corsOptions));
-
 // const corsOptions = {
 //   origin: "*", 
 // };
 
 const app = express();
+
 app.use(express.json());
+app.use(cors(corsOptions));
 
 // Middleware to handle multipart/form-data to upload a file
 const multer = require('multer');
