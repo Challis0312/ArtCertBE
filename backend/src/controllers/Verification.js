@@ -22,12 +22,10 @@ module.exports.verifyArtwork = function verifyArtwork(req, res) {
     const sub = req.user?.sub || null;
     VerificationService.verifyArtwork(artworkID, body, rawFile, sub)
         .then(function (response) {
-            console.log("Here in normal response from Verification js");
             const { status, ...responseBody } = response;
             utils.writeJson(res, responseBody, status);
         })
         .catch(function (response) {
-            console.log("Here in error response from Verification js");
             const { status, ...errorBody } = response;
             utils.writeJson(res, errorBody, status);
         });

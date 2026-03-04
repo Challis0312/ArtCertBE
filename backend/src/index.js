@@ -30,10 +30,7 @@ const verifier = CognitoJwtVerifier.create({
 });
 
 // Middleware to verify the token
-async function verifyToken(req, res, next) {
-  console.log("Hitting verifyToken");
-  console.log("Request: ${req}");
-  
+async function verifyToken(req, res, next) {  
   if (req.method === 'OPTIONS') return next(); // CORS Pre-Check Release
   // Certification-related items should be released.
   const openAuth = req.path === '/v1/login' || req.path === '/v1/auth/token' || req.path === '/v1/auth/refresh'
