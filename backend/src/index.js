@@ -31,6 +31,9 @@ const verifier = CognitoJwtVerifier.create({
 
 // Middleware to verify the token
 async function verifyToken(req, res, next) {
+  console.log("Hitting verifyToken");
+  console.log("Request: ${req}");
+  
   if (req.method === 'OPTIONS') return next(); // CORS Pre-Check Release
   // Certification-related items should be released.
   const openAuth = req.path === '/v1/login' || req.path === '/v1/auth/token' || req.path === '/v1/auth/refresh'
@@ -96,6 +99,7 @@ const corsOptions = {
 const app = express();
 
 app.use(express.json());
+
 app.use(cors(corsOptions));
 
 // Middleware to handle multipart/form-data to upload a file
@@ -119,7 +123,7 @@ const multer = require('multer');
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 90 * 1024 * 1024,
+    fileSize: 120 * 1024 * 1024,
     fieldSize: 10 * 1024 * 1024,
   },
   fileFilter: (req, file, cb) => {
