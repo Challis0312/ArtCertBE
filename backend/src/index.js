@@ -87,7 +87,7 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // if need to send cookies or auth headers
-  origin: "*",
+  origin: true,
 };
 
 // const corsOptions = {
