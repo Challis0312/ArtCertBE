@@ -83,21 +83,20 @@ async function verifyToken(req, res, next) {
 }
 
 const corsOptions = {
-  // origin: ["http://localhost:5173/", "https://artcert.com.au"], // frontend URL
+  origin: ["http://localhost:5173/", "https://artcert.com.au"], // frontend URL
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // if need to send cookies or auth headers
-  origin: true,
 };
+
+app.use(cors(corsOptions));
 
 // const corsOptions = {
 //   origin: "*", 
 // };
 
 const app = express();
-
 app.use(express.json());
-app.use(cors(corsOptions));
 
 // Middleware to handle multipart/form-data to upload a file
 const multer = require('multer');
