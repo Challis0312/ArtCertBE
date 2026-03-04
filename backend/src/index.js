@@ -85,7 +85,7 @@ async function verifyToken(req, res, next) {
 const corsOptions = {
   // origin: ["http://localhost:5173/", "https://artcert.com.au"], // frontend URL
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  // allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // if need to send cookies or auth headers
   origin: "*",
 };
